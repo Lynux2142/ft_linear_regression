@@ -7,6 +7,6 @@ def printGraph(km, price, theta0, theta1):
     xlabel('km')
     ylabel('price')
     lineX = [min(km), max(km)]
-    lineY = [(theta1 * float(i)) + theta0 for i in lineX]
+    lineY = [theta1 * float(i) + theta0 for i in lineX]
     plot(lineX, lineY)
     show()
