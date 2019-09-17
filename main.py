@@ -29,15 +29,15 @@ def learnFunction(data):
         for row in data:
             tmpTheta0 += (estimatePrice(row[0]) - row[1])
             tmpTheta1 += (estimatePrice(row[0]) - row[1]) * row[0]
-        theta0 = theta0 - learningRate * (1 / len(data)) * tmpTheta0
-        theta1 = theta1 - learningRate * (1 / len(data)) * tmpTheta1
+        theta0 -= learningRate * (1 / len(data)) * tmpTheta0
+        theta1 -= learningRate * (1 / len(data)) * tmpTheta1
 
 def main():
     global theta0
     global theta1
     data = []
 
-    with open('otherData.csv', newline='') as f:
+    with open('Data.csv', newline='') as f:
         csv_data = list(csv.reader(f, delimiter = ','))
         data_size = float(len(csv_data))
         for row in range(1, len(csv_data)):
@@ -45,9 +45,9 @@ def main():
     data = normalizeData(data)
     learnFunction(data)
     theta0 = revNormalize(theta0)
-    printGraph([revNormalize(row[0]) for row in data], [revNormalize(row[1]) for row in data], theta0, theta1)
     print(theta0, theta1)
     print(estimatePrice(84000.0))
+    printGraph([revNormalize(row[0]) for row in data], [revNormalize(row[1]) for row in data], theta0, theta1)
     return (0)
 
 theta0 = float(0)
