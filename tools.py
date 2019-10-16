@@ -30,19 +30,12 @@ def rev_normalize_elem(elem, minmax, size):
     return (((elem - size[0]) * (minmax[1] - minmax[0]) + (size[1] - size[0]) * minmax[0]) / (size[1] - size[0]))
     #return (elem * (minmax[1] - minmax[0]) + minmax[0])
 
-def normalize_data(data, minmax, size):
+def normalize_data_set(norm_funct, data, minmax, size):
     for row in data:
         for elem in row: assert (type(elem) == float)
     for row in range(len(data)):
         for elem in range(len(data[row])):
-            data[row][elem] = normalize_elem(data[row][elem], minmax, size)
-
-def rev_normalize_data(data, minmax, size):
-    for row in data:
-        for elem in row: assert (type(elem) == float)
-    for row in range(len(data)):
-        for elem in range(len(data[row])):
-            data[row][elem] = rev_normalize_elem(data[row][elem], minmax, size)
+            data[row][elem] = norm_funct(data[row][elem], minmax, size)
 
 def load_file(filename):
     try:
