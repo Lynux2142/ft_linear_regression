@@ -18,29 +18,31 @@ def dataset_minmax(data):
     all_data = [elem for row in data for elem in row]
     return (min(all_data), max(all_data))
 
-def normalize_elem(elem, minmax):
+def normalize_elem(elem, minmax, size):
     assert (type(elem) == float)
     for row in minmax: assert (type(row) == float)
-    return ((elem - minmax[0]) / (minmax[1] - minmax[0]))
+    return ((size[1] - size[0]) * ((elem - minmax[0]) / (minmax[1] - minmax[0])) + size[0])
+    #return ((elem - minmax[0]) / (minmax[1] - minmax[0]))
 
-def rev_normalize_elem(elem, minmax):
+def rev_normalize_elem(elem, minmax, size):
     assert (type(elem) == float)
     for row in minmax: assert (type(row) == float)
-    return (elem * (minmax[1] - minmax[0]) + minmax[0])
+    return (((elem - size[0]) * (minmax[1] - minmax[0]) + (size[1] - size[0]) * minmax[0]) / (size[1] - size[0]))
+    #return (elem * (minmax[1] - minmax[0]) + minmax[0])
 
-def normalize_data(data, minmax):
+def normalize_data(data, minmax, size):
     for row in data:
         for elem in row: assert (type(elem) == float)
     for row in range(len(data)):
         for elem in range(len(data[row])):
-            data[row][elem] = normalize_elem(data[row][elem], minmax)
+            data[row][elem] = normalize_elem(data[row][elem], minmax, size)
 
-def rev_normalize_data(data, minmax):
+def rev_normalize_data(data, minmax, size):
     for row in data:
         for elem in row: assert (type(elem) == float)
     for row in range(len(data)):
         for elem in range(len(data[row])):
-            data[row][elem] = rev_normalize_elem(data[row][elem], minmax)
+            data[row][elem] = rev_normalize_elem(data[row][elem], minmax, size)
 
 def load_file(filename):
     try:

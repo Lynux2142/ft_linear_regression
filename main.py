@@ -7,17 +7,10 @@ def estimatePrice(mileage):
     assert (type(mileage) == float)
     return (theta0 + theta1 * mileage)
 
-def cost_function(data):
-    err = 0
-    for row in data:
-        err = err + (row[1] - estimatePrice(row[0])) ** 2
-    return (err / len(data))
-
 def learningFunction(data):
     global theta0
     global theta1
-    learningRate = float(0.01)
-    loss = []
+    learningRate = 0.01
 
     for row in data:
         for elem in row: assert (type(row[0]) == float)
@@ -28,15 +21,14 @@ def learningFunction(data):
         for row in data:
             tmpTheta0 = tmpTheta0 + (estimatePrice(row[0]) - row[1])
             tmpTheta1 = tmpTheta1 + ((estimatePrice(row[0]) - row[1]) * row[0])
-        theta0 = theta0 - (learningRate * (1 / len(data)) * tmpTheta0)
-        theta1 = theta1 - (learningRate * (1 / len(data)) * tmpTheta1)
-        loss.append(cost_function(data))
-    return (loss)
+        theta0 = theta0 - (learningRate * (1.0 / float(len(data))) * tmpTheta0)
+        theta1 = theta1 - (learningRate * (1.0 / float(len(data))) * tmpTheta1)
 
 def main():
     global theta0
     global theta1
     data = []
+    size = (0.0, 1.0)
 
     try:
         assert (len(sys.argv) == 2)
@@ -45,13 +37,11 @@ def main():
         sys.exit(1)
     data = load_file(sys.argv[1])
     minmax = dataset_minmax(data)
-    normalize_data(data, minmax)
-    loss = learningFunction(data)
-    theta0 = rev_normalize_elem(theta0, minmax)
-    #theta1 = rev_normalize_elem(theta1, minmax)
-    print(loss[-1])
+    normalize_data(data, minmax, size)
+    learningFunction(data)
+    theta0 = rev_normalize_elem(theta0, minmax, size)
     print(theta0, theta1)
-    rev_normalize_data(data, minmax)
+    rev_normalize_data(data, minmax, size)
     printGraph([row[0] for row in data], [row[1] for row in data], theta0, theta1)
 
 theta0 = float(0)
