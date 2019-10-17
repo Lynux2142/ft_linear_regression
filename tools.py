@@ -3,10 +3,11 @@
 from csv import reader
 from pylab import *
 
-def printGraph(km, price, theta0, theta1):
+def printGraph(km, price, title, theta0, theta1):
+    assert (type(title[0]) == str and type(title[1]) == str)
     scatter(km, price)
-    xlabel('km')
-    ylabel('price')
+    xlabel(title[0])
+    ylabel(title[1])
     lineX = [min(km), max(km)]
     lineY = [theta1 * float(i) + theta0 for i in lineX]
     plot(lineX, lineY)
@@ -45,8 +46,9 @@ def load_file(filename):
         sys.exit(2)
     lines = reader(file)
     data = list(lines)
+    title = data[0]
     del data[0]
     for row in data:
         for i in range(len(row)):
             row[i] = float(row[i].strip())
-    return (data)
+    return (data, title)
