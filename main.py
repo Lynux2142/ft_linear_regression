@@ -54,6 +54,8 @@ def main():
     learningFunction(data)
     theta0 = rev_normalize_elem(theta0, minmax, size)
     print(theta0, theta1)
+    print('aim: ', end='')
+    print(aim_theta0, aim_theta1)
     normalize_data_set(rev_normalize_elem, data, minmax, size)
     printGraph([row[0] for row in data], [row[1] for row in data], title, theta0, theta1, aim_theta0, aim_theta1)
 
