@@ -47,17 +47,17 @@ def main():
     except:
         print('usage: ./main.py [data.csv]')
         sys.exit(1)
-    data, title = load_file(sys.argv[1])
-    aim_theta0, aim_theta1 = aim(data)
+    data = load_file(sys.argv[1])
+    aim_theta0, aim_theta1 = aim(data[1:])
     minmax = dataset_minmax(data)
     normalize_data_set(normalize_elem, data, minmax, size)
-    learningFunction(data)
+    learningFunction(data[1:])
     theta0 = rev_normalize_elem(theta0, minmax, size)
     print(theta0, theta1)
     print('aim: ', end='')
     print(aim_theta0, aim_theta1)
     normalize_data_set(rev_normalize_elem, data, minmax, size)
-    printGraph([row[0] for row in data], [row[1] for row in data], title, theta0, theta1, aim_theta0, aim_theta1)
+    printGraph(data, theta0, theta1, aim_theta0, aim_theta1)
 
 theta0 = 0.0
 theta1 = 0.0
