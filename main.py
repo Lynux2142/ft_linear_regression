@@ -49,7 +49,6 @@ def main():
     normalize_data_set(normalize_elem, data, minmax, size)
     aim_theta0, aim_theta1 = aim(data[1:])
     learningFunction(data[1:])
-    #theta1 = rev_normalize_elem(theta1, minmax[1], size)
     print('predict: {} {}'.format(theta0, theta1))
     print('aim:     {} {}'.format(aim_theta0, aim_theta1))
     if (len(sys.argv) == 3):
