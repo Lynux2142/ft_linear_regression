@@ -4,7 +4,6 @@ import sys
 from tools import *
 
 def estimatePrice(mileage):
-    assert (type(mileage) == float)
     return (theta0 + theta1 * mileage)
 
 def learningFunction(data):
@@ -12,8 +11,6 @@ def learningFunction(data):
     global theta1
     learningRate = 0.01
 
-    for row in data:
-        for elem in row: assert (type(row[0]) == float)
     for _ in range(0, 10000):
         tmpTheta0 = 0.0
         tmpTheta1 = 0.0
@@ -40,24 +37,29 @@ def aim(data):
 def main():
     global theta0
     global theta1
-    size = (0.0, 1.0)
+    size = (-1.0, 1.0)
 
     try:
-        assert (len(sys.argv) == 2)
+        assert (len(sys.argv) == 2 or len(sys.argv) == 3)
     except:
-        print('usage: ./main.py [data.csv]')
+        print('usage: ./main.py [data.csv] [mileage]')
         sys.exit(1)
     data = load_file(sys.argv[1])
-    aim_theta0, aim_theta1 = aim(data[1:])
     minmax = dataset_minmax(data)
     normalize_data_set(normalize_elem, data, minmax, size)
+    aim_theta0, aim_theta1 = aim(data[1:])
     learningFunction(data[1:])
-    theta0 = rev_normalize_elem(theta0, minmax, size)
-    print(theta0, theta1)
-    print('aim: ', end='')
-    print(aim_theta0, aim_theta1)
-    normalize_data_set(rev_normalize_elem, data, minmax, size)
-    printGraph(data, theta0, theta1, aim_theta0, aim_theta1)
+    #theta1 = rev_normalize_elem(theta1, minmax[1], size)
+    print('predict: {} {}'.format(theta0, theta1))
+    print('aim:     {} {}'.format(aim_theta0, aim_theta1))
+    if (len(sys.argv) == 3):
+        norm_mileage = normalize_elem(float(sys.argv[2]), minmax[0], size)
+        norm_predict_price = estimatePrice(norm_mileage)
+        predict_price = rev_normalize_elem(norm_predict_price, minmax[1], size)
+        print('\n{} km --> {} price predicted'.format(sys.argv[2], predict_price))
+        printGraph(data, theta0, aim_theta1, aim_theta0, aim_theta1, [norm_mileage, norm_predict_price])
+    else:
+        printGraph(data, theta0, aim_theta1, aim_theta0, aim_theta1)
 
 theta0 = 0.0
 theta1 = 0.0
