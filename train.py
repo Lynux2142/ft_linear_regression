@@ -48,10 +48,12 @@ def main():
     learningFunction(data[1:])
     rev_theta(minmax, size)
     save_thetas(theta0, theta1)
+    print('y = {}x + {}'.format(theta1, theta0))
     normalize_data_set(rev_normalize_elem, data, minmax, size)
     if (len(sys.argv) == 3):
         mileage = float(sys.argv[2])
         predict_price = estimatePrice(mileage)
+        print('{0} ({2}) --> {1} ({3} predicted)'.format(mileage, predict_price, data[0][0], data[0][1]))
         printGraph(data, theta0, theta1, [mileage, predict_price])
     else:
         printGraph(data, theta0, theta1)
