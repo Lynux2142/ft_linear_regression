@@ -48,4 +48,5 @@ def load_file(filename):
     for row in data[1:]:
         for i in range(len(row)):
             row[i] = float(row[i].strip())
+    file.close()
     return (data)

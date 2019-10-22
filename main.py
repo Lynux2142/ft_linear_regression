@@ -68,9 +68,9 @@ def main():
         mileage = float(sys.argv[2])
         predict_price = estimatePrice(mileage)
         print('\n{0} {2} --> {1} {3} predicted'.format(sys.argv[2], predict_price, data[0][0], data[0][1]))
-        printGraph(data, theta0, aim_theta1, aim_theta0, aim_theta1, [mileage, predict_price])
+        printGraph(data, theta0, theta1, aim_theta0, aim_theta1, [mileage, predict_price])
     else:
-        printGraph(data, theta0, aim_theta1, aim_theta0, aim_theta1)
+        printGraph(data, theta0, theta1, aim_theta0, aim_theta1)
 
 theta0 = 0.0
 theta1 = 0.0
