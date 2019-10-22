@@ -36,6 +36,7 @@ def main():
     global theta0
     global theta1
     size = (-1.0, 1.0)
+    point = None
 
     try:
         assert (len(sys.argv) == 2 or len(sys.argv) == 3)
@@ -54,9 +55,8 @@ def main():
         value = float(sys.argv[2])
         predict = estimatePrice(value)
         print('{0} ({2}) --> {1} ({3} predicted)'.format(value, predict, data[0][0], data[0][1]))
-        printGraph(data, theta0, theta1, [value, predict])
-    else:
-        printGraph(data, theta0, theta1)
+        point = [value, predict]
+    printGraph(data, theta0, theta1, point)
 
 theta0 = 0.0
 theta1 = 0.0

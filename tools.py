@@ -9,9 +9,9 @@ def printGraph(data, theta0, theta1, point = None):
     ylabel(data[0][1])
     lineX = [min([row[0] for row in data[1:]]), max([row[0] for row in data[1:]])]
     lineY = [theta1 * float(i) + theta0 for i in lineX]
-    plot(lineX, lineY, 'orange', zorder = 2)
+    plot(lineX, lineY, 'red', zorder = 2)
     if (point):
-        scatter(point[0], point[1], c = 'red', zorder = 3)
+        scatter(point[0], point[1], c = 'orange', zorder = 3)
     show()
 
 def dataset_minmax(data):
