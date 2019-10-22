@@ -3,8 +3,8 @@
 import sys
 from tools import *
 
-def estimatePrice(mileage):
-    return (theta0 + theta1 * mileage)
+def estimatePrice(value):
+    return (theta0 + theta1 * value)
 
 def learningFunction(data):
     global theta0
@@ -51,10 +51,10 @@ def main():
     print('y = {}x + {}'.format(theta1, theta0))
     normalize_data_set(rev_normalize_elem, data, minmax, size)
     if (len(sys.argv) == 3):
-        mileage = float(sys.argv[2])
-        predict_price = estimatePrice(mileage)
-        print('{0} ({2}) --> {1} ({3} predicted)'.format(mileage, predict_price, data[0][0], data[0][1]))
-        printGraph(data, theta0, theta1, [mileage, predict_price])
+        value = float(sys.argv[2])
+        predict = estimatePrice(value)
+        print('{0} ({2}) --> {1} ({3} predicted)'.format(value, predict, data[0][0], data[0][1]))
+        printGraph(data, theta0, theta1, [value, predict])
     else:
         printGraph(data, theta0, theta1)
 

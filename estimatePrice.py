@@ -3,8 +3,8 @@
 import sys
 from tools import get_thetas
 
-def estimatePrice(mileage):
-    return (theta0 + theta1 * mileage)
+def estimatePrice(value):
+    return (theta0 + theta1 * value)
 
 def main():
     global theta0
