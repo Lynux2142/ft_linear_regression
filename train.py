@@ -21,19 +21,6 @@ def learningFunction(data):
         theta0 -= ((learningRate * tmpTheta0) / float(len(data)))
         theta1 -= ((learningRate * tmpTheta1) / float(len(data)))
 
-def aim(data):
-    data_X = [row[0] for row in data]
-    data_Y = [row[1] for row in data]
-    sum_X = sum(data_X)
-    sum_Y = sum(data_Y)
-    mean_X = mean(data_X)
-    mean_Y = mean(data_Y)
-    Sum_of_Square_X = sum([((elem - mean_X) ** 2) for elem in data_X])
-    Sum_of_Products = sum([((row[0] - mean_X) * (row[1] - mean_Y)) for row in data])
-    aim_theta1 = Sum_of_Products / Sum_of_Square_X
-    aim_theta0 = mean_Y - aim_theta1 * mean_X
-    return (aim_theta0, aim_theta1)
-
 def rev_theta(minmax, size):
     global theta0
     global theta1
@@ -53,24 +40,21 @@ def main():
     try:
         assert (len(sys.argv) == 2 or len(sys.argv) == 3)
     except:
-        print('usage: ./main.py [data.csv] [value]')
+        print('usage: ./main.py data_set.csv [value]')
         sys.exit(1)
     data = load_file(sys.argv[1])
-    aim_theta0, aim_theta1 = aim(data[1:])
     minmax = dataset_minmax(data)
     normalize_data_set(normalize_elem, data, minmax, size)
     learningFunction(data[1:])
     rev_theta(minmax, size)
-    print('predict: {} {}'.format(theta0, theta1))
-    print('aim:     {} {}'.format(aim_theta0, aim_theta1))
+    save_thetas(theta0, theta1)
     normalize_data_set(rev_normalize_elem, data, minmax, size)
     if (len(sys.argv) == 3):
         mileage = float(sys.argv[2])
         predict_price = estimatePrice(mileage)
-        print('\n{0} {2} --> {1} {3} predicted'.format(sys.argv[2], predict_price, data[0][0], data[0][1]))
-        printGraph(data, theta0, theta1, aim_theta0, aim_theta1, [mileage, predict_price])
+        printGraph(data, theta0, theta1, [mileage, predict_price])
     else:
-        printGraph(data, theta0, theta1, aim_theta0, aim_theta1)
+        printGraph(data, theta0, theta1)
 
 theta0 = 0.0
 theta1 = 0.0

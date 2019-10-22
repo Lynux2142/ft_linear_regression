@@ -3,17 +3,15 @@
 from csv import reader
 from pylab import *
 
-def printGraph(data, theta0, theta1, aim_theta0, aim_theta1, point = None):
-    scatter([row[0] for row in data[1:]], [row[1] for row in data[1:]])
+def printGraph(data, theta0, theta1, point = None):
+    scatter([row[0] for row in data[1:]], [row[1] for row in data[1:]], zorder = 1)
     xlabel(data[0][0])
     ylabel(data[0][1])
     lineX = [min([row[0] for row in data[1:]]), max([row[0] for row in data[1:]])]
     lineY = [theta1 * float(i) + theta0 for i in lineX]
-    aim_lineY = [aim_theta1 * float(i) + aim_theta0 for i in lineX]
-    plot(lineX, aim_lineY)
-    plot(lineX, lineY)
+    plot(lineX, lineY, 'orange', zorder = 2)
     if (point):
-        scatter(point[0], point[1])
+        scatter(point[0], point[1], c = 'red', zorder = 3)
     show()
 
 def dataset_minmax(data):
@@ -50,3 +48,29 @@ def load_file(filename):
             row[i] = float(row[i].strip())
     file.close()
     return (data)
+
+def save_thetas(theta0, theta1):
+    try:
+        file = open('thetas', 'w+')
+        file.write('{}\n{}\n'.format(str(theta0), str(theta1)))
+        file.close()
+    except IOError as e:
+        print('error: {}'.format(e.strerror))
+        sys.exit(1)
+    except:
+        print('error')
+        sys.exit(2)
+
+def get_thetas():
+    try:
+        file = open('thetas', 'r')
+        theta0 = float(file.readline())
+        theta1 = float(file.readline())
+        file.close()
+    except IOError as e:
+        print('error: {} {}'.format(e.strerror, "'thetas'"))
+        sys.exit(1)
+    except:
+        print('error')
+        sys.exit(2)
+    return (theta0, theta1)
