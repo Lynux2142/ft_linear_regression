@@ -44,7 +44,7 @@ def main():
         print('usage: ./main.py data_set.csv [value]')
         sys.exit(1)
     data = load_file(sys.argv[1])
-    print('linear correlation coefficient: {}'.format(linear_correlation(data)))
+    print('coefficient of determination: {}'.format(linear_correlation(data)))
     minmax = dataset_minmax(data)
     normalize_data_set(normalize_elem, data, minmax, size)
     learningFunction(data[1:])

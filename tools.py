@@ -87,6 +87,6 @@ def linear_correlation(data):
     square_sum_y = float(sum([elem ** 2 for elem in data_y]))
     mul = [float(row[0] * row[1]) for row in data[1:]]
     sum_x_y = float(sum(mul))
-    return ((data_len * sum_x_y - (sum_x * sum_y)) /
+    return (((data_len * sum_x_y - (sum_x * sum_y)) /
             (sqrt(data_len * square_sum_x - sum_x ** 2) *
-            sqrt(data_len * square_sum_y - sum_y ** 2)))
+            sqrt(data_len * square_sum_y - sum_y ** 2))) ** 2)
