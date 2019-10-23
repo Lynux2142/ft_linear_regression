@@ -2,6 +2,7 @@
 
 from csv import reader
 from pylab import *
+from math import sqrt
 
 def printGraph(data, theta0, theta1, point = None):
     scatter([row[0] for row in data[1:]], [row[1] for row in data[1:]], zorder = 1)
@@ -9,9 +10,10 @@ def printGraph(data, theta0, theta1, point = None):
     ylabel(data[0][1])
     lineX = [min([row[0] for row in data[1:]]), max([row[0] for row in data[1:]])]
     lineY = [theta1 * float(i) + theta0 for i in lineX]
-    plot(lineX, lineY, 'red', zorder = 2)
+    plot(lineX, lineY, 'orange', zorder = 2, label = 'y = {}x + {}'.format(round(theta1, 4), round(theta0, 4)))
+    legend(loc = 'upper left')
     if (point):
-        scatter(point[0], point[1], c = 'orange', zorder = 3)
+        scatter(point[0], point[1], c = 'red', zorder = 3)
     show()
 
 def dataset_minmax(data):
@@ -74,3 +76,17 @@ def get_thetas():
         print('error')
         sys.exit(2)
     return (theta0, theta1)
+
+def linear_correlation(data):
+    data_len = float(len(data[1:]))
+    data_x = [float(row[0]) for row in data[1:]]
+    data_y = [float(row[1]) for row in data[1:]]
+    sum_x = float(sum(data_x))
+    square_sum_x = float(sum([elem ** 2 for elem in data_x]))
+    sum_y = float(sum(data_y))
+    square_sum_y = float(sum([elem ** 2 for elem in data_y]))
+    mul = [float(row[0] * row[1]) for row in data[1:]]
+    sum_x_y = float(sum(mul))
+    return ((data_len * sum_x_y - (sum_x * sum_y)) /
+            (sqrt(data_len * square_sum_x - sum_x ** 2) *
+            sqrt(data_len * square_sum_y - sum_y ** 2)))
