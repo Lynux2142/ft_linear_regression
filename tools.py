@@ -2,9 +2,9 @@
 
 from csv import reader
 from pylab import *
-from math import sqrt
+from math import *
 
-def printGraph(data, theta0, theta1, point = None):
+def printGraph(data, cost, theta0, theta1, point = None):
     scatter([row[0] for row in data[1:]], [row[1] for row in data[1:]], zorder = 1)
     xlabel(data[0][0])
     ylabel(data[0][1])
@@ -14,6 +14,8 @@ def printGraph(data, theta0, theta1, point = None):
     legend(loc = 'upper left')
     if (point):
         scatter(point[0], point[1], c = 'red', zorder = 3)
+    show()
+    plot(range(len(cost)), cost)
     show()
 
 def dataset_minmax(data):
@@ -78,15 +80,14 @@ def get_thetas():
     return (theta0, theta1)
 
 def linear_correlation(data):
-    data_len = float(len(data[1:]))
-    data_x = [float(row[0]) for row in data[1:]]
-    data_y = [float(row[1]) for row in data[1:]]
-    sum_x = float(sum(data_x))
-    square_sum_x = float(sum([elem ** 2 for elem in data_x]))
-    sum_y = float(sum(data_y))
-    square_sum_y = float(sum([elem ** 2 for elem in data_y]))
-    mul = [float(row[0] * row[1]) for row in data[1:]]
-    sum_x_y = float(sum(mul))
+    data_len = float(len(data))
+    data_x = [row[0] for row in data]
+    data_y = [row[1] for row in data]
+    sum_x = sum(data_x)
+    square_sum_x = sum([elem ** 2 for elem in data_x])
+    sum_y = sum(data_y)
+    square_sum_y = sum([elem ** 2 for elem in data_y])
+    sum_x_y = sum([(row[0] * row[1]) for row in data])
     return (((data_len * sum_x_y - (sum_x * sum_y)) /
             (sqrt(data_len * square_sum_x - sum_x ** 2) *
             sqrt(data_len * square_sum_y - sum_y ** 2))) ** 2)
