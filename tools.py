@@ -45,12 +45,28 @@ def load_file(filename):
     except IOError as e:
         print('error: {}'.format(e.strerror))
         sys.exit(2)
-    lines = reader(file)
-    data = list(lines)
+    try:
+        lines = reader(file)
+        data = list(lines)
+    except:
+        print('error: cannot convert data to list')
+        exit(4)
     for row in data[1:]:
+        try:
+            assert (len(row) == 2)
+        except:
+            print("error: data must have 2 columns")
+            sys.exit(5)
         for i in range(len(row)):
-            row[i] = float(row[i].strip())
+            try:
+                row[i] = float(row[i].strip())
+            except:
+                print(f'"{row[i].strip()}" not a float')
+                sys.exit(3)
     file.close()
+    if (not data or len(data) <= 2):
+        print('error: not enough data')
+        sys.exit(1)
     return (data)
 
 def save_thetas(theta0, theta1):
